@@ -1,0 +1,18 @@
+<html>
+  <head><title>Düzgün Hürriyet</title></head>
+  <body>
+    <h1>Düzgün Hürriyet</h1>
+    <ul>
+      <% for manset in @mansetler %>
+        <li>
+          <a href="<%=manset.link%>">
+            <% if manset.text %>
+              <h3><%= manset.text %></h3>
+            <% end %>
+            <img src="<%= manset.img %>">
+          </a>
+      <% end %>
+    </ul>
+  </body>
+</html>
+
