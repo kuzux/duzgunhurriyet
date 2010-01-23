@@ -1,0 +1,43 @@
+h1{
+  font-family: "Helvetica","Arial",sans-serif;
+  font-size: xx-large;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+hr{
+  color: #000;
+  background-color: #000;
+  height: 5px;
+  width: 90%;
+}
+
+ul{
+  list-style-type: none;
+  float: left;
+}
+
+.onlyphoto{
+  float: left;
+}
+
+#contents{
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+  border-style: dashed;
+  border-width: 5px;
+  border-color: #ccc;
+}
+
+a img{
+  border: none;
+}
+
+body{
+  background-color: #eee;
+}
+
+

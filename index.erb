@@ -4,22 +4,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="public/app.css" rel="stylesheet" type="text/css" />
+    <link href="app.css" rel="stylesheet" type="text/css" />
     <title>Düzgün Hürriyet</title>
   </head>
   <body>
-    <h1>Düzgün Hürriyet</h1>
-    <ul>
-      <% for manset in @mansetler %>
-        <li>
-          <a href="<%=manset.link%>">
-            <% if manset.text %>
-              <h3><%= manset.text %></h3>
-            <% end %>
-            <img src="<%= manset.img %>" />
-          </a>
-      <% end %>
-    </ul>
+    <div id="contents">
+      <h1>Düzgün Hürriyet</h1>
+      <hr />
+      <ul>
+        <% for manset in @mansetler %>
+          <%= manset.text ? "<li>" : "<li class='onlyphoto'>" %>
+            <a href="<%=manset.link%>">
+              <% if manset.text %>
+                <h3><%= manset.text %></h3>
+              <% end %>
+              <img src="<%= manset.img %>" />
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </body>
 </html>
 
