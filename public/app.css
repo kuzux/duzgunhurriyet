@@ -1,6 +1,6 @@
 @font-face {
   font-family: "MgOpen Cosmetica";
-  src: url("MgopenCosmeticaBold.ttf");
+  src: local("MgOpenCosmetica Bold"), url("MgopenCosmeticaBold.ttf");
   font-weight: bold;
 }
 
