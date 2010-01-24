@@ -21,7 +21,6 @@ def screenscrape
   links
 end
 
-use Rack::Cache
 set :views, File.dirname(__FILE__)
 
 get '/' do
