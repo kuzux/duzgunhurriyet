@@ -21,9 +21,11 @@ def screenscrape
   links
 end
 
+use Rack::Cache
 set :views, File.dirname(__FILE__)
 
 get '/' do
+  headers 'Cache-Control' => "max-age=300"
   @mansetler = screenscrape
   erb :index
 end
