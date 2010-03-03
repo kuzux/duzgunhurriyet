@@ -14,15 +14,19 @@ def mansetler
   doc = Nokogiri::HTML(open(url))
   logger.info("Fetched #{url}")
   links = []
-  doc.xpath("/html/body/table/tr[2]/td/table/tr/td/table/tr/td/a").each do |elm|
-    img = elm.children.first
-    links << Manset.new(img['longdesc'],img['alt'],elm['href'])
+
+  doc.css(".hurriyet2010_uclumanset1").each do |e|
+    img = e.children.css('img')[0]['src']
+    link = e.children.css('a')[0]['href']
+    links << Manset.new(img,nil,link)
   end
-  1.upto(10) do |i|
-    elm = doc.css("div#hurmanset#{i} a").first
-    img = elm.children.first
-    links << Manset.new(img['longdesc'],img['alt'],elm['href'])
+  
+  doc.css(".mansetImageDiv").each do |e|
+    img = e.children.css('img')[0]['src']
+    link = e.children.css('a')[0]['href']
+    links << Manset.new(img,nil,link)
   end
+
   links
 end
 

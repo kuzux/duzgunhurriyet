@@ -1,4 +1,7 @@
 .*.sw?
 screenscrape_test.rb
 log/*
+anasayfatest_files
+anasayfatest_files/*
+anasayfatest.html
 
