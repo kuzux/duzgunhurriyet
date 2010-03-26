@@ -1,24 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="app.css" rel="stylesheet" type="text/css" />
-    <title>Düzgün Hürriyet</title>
-  </head>
-  <body>
-    <div id="contents">
-      <h1>Düzgün Hürriyet</h1>
-      <hr />
-      <div id="surmanset">
-        <%= erb(:manset, :layout=>false, :locals=>{:mansetler => @sur}) %>
-      </div>
-      <hr />
-      <div id="manset">
-        <%= erb(:manset, :layout=>false, :locals=>{:mansetler => @mansetler}) %>
-      </div>
-    </div>
-  </body>
-</html>
+<div id="surmanset">
+  <%= erb(:manset, :layout=>false, :locals=>{:mansetler => @sur}) %>
+</div>
+<hr />
+<div id="manset">
+  <%= erb(:manset, :layout=>false, :locals=>{:mansetler => @mansetler}) %>
+</div>
 
