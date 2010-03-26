@@ -47,10 +47,12 @@ def scrape_haber url
   doc = Nokogiri::HTML(open(url))
   logger.info("Fetched #{url}")
   
+  title = doc.css("h1")[0].inner_text
+
   toplevel = doc.css(".hurriyet2008_detail_text")[0].children
   toplevel.delete(toplevel[1])
   res = []
-  
+
   toplevel.each do |elm|
     case elm
     when Nokogiri::XML::Text
@@ -71,7 +73,7 @@ def scrape_haber url
     end
   end
 
-  res.map{|x| x.to_html}.join("")
+  [title, res.map{|x| x.to_html}.join("")]
 end
 
 if production?
@@ -91,9 +93,9 @@ get '/' do
 end
 
 get %r{/haber/(.+)} do
-  headers 'Cache-Control' => "no-cache"
+  headers 'Cache-Control' => "max-age=1800"
   @url = params[:captures][0]
-  @html = scrape_haber @url
+  @title, @html = scrape_haber @url
   erb :haber
 end
 

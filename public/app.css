@@ -28,6 +28,13 @@ ul{
   float: left;
 }
 
+.haber{
+  width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+
 #contents{
   width: 75%;
   margin-left: auto;
