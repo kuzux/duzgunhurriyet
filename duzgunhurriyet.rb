@@ -43,6 +43,8 @@ def mansetler
 end
 
 def scrape_haber url
+  url.sub(/http:\/www/,"http://www")
+
   logger.info("Fetching #{url}")
   doc = Nokogiri::HTML(open(url))
   logger.info("Fetched #{url}")
