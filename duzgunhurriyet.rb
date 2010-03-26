@@ -42,6 +42,38 @@ def mansetler
   [links, biglinks]
 end
 
+def scrape_haber url
+  logger.info("Fetching #{url}")
+  doc = Nokogiri::HTML(open("haber_test.html"))
+  logger.info("Fetched #{url}")
+  
+  toplevel = doc.css(".hurriyet2008_detail_text")[0].children
+  toplevel.delete(toplevel[1])
+  res = []
+  
+  toplevel.each do |elm|
+    case elm
+    when Nokogiri::XML::Text
+      res << elm unless elm.inner_text.strip.empty?
+    when Nokogiri::XML::Element
+      res << elm if elm.name == "strong"
+      
+      if elm.name == "div"
+        elm.children.each do |e|
+          case e
+          when Nokogiri::XML::Text
+            res << e unless e.inner_text.strip.empty?
+          when Nokogiri::XML::Element
+            res << e unless e.name == "br" || e.name == "table"
+          end
+        end
+      end
+    end
+  end
+
+  res.map{|x| x.to_html}.join("")
+end
+
 if production?
   LOGGER = Logger.new("log/production.log")
 elsif development?
@@ -56,5 +88,12 @@ get '/' do
   headers 'Cache-Control' => "max-age=300"
   @sur, @mansetler = mansetler
   erb :index
+end
+
+get %r{/haber/(.+)} do
+  headers 'Cache-Control' => "no-cache"
+  @url = params[:captures][0]
+  @html = scrape_haber @url
+  erb :haber
 end
 
