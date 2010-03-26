@@ -44,7 +44,7 @@ end
 
 def scrape_haber url
   logger.info("Fetching #{url}")
-  doc = Nokogiri::HTML(open("haber_test.html"))
+  doc = Nokogiri::HTML(open(url))
   logger.info("Fetched #{url}")
   
   toplevel = doc.css(".hurriyet2008_detail_text")[0].children
