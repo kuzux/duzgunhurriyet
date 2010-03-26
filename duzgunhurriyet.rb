@@ -8,33 +8,38 @@ require 'logger'
 class Manset < Struct.new(:img, :text, :link); end
 class Kose < Struct.new(:yazar, :baslik, :text); end
 
+def siktiret url
+  url =~ /(magazin|galeri|spor|webtv)/
+end
+
 def mansetler
   url = 'http://www.hurriyet.com.tr/anasayfa/'
   logger.info("Fetching #{url}")
   doc = Nokogiri::HTML(open(url))
   logger.info("Fetched #{url}")
-  links = []
+  links = Array.new
+  biglinks = Array.new
 
   doc.css(".hurriyet2010_uclumanset1").each do |e|
     img = e.children.css('img')[0]['src']
     link = e.children.css('a')[0]['href']
-    links << Manset.new(img,nil,link)
+    links << Manset.new(img,nil,link) unless siktiret(link)
   end
   
   1.upto(4) do |i|
     div = doc.css("#hurriyet_4lu_#{i}")
     img = div.css('img')[0]['src']
     link = div.css('a')[0]['href']
-    links << Manset.new(img, nil, link)
+    links << Manset.new(img, nil, link) unless siktiret(link)
   end
 
   doc.css(".mansetImageDiv").each do |e|
     img = e.children.css('img')[0]['src']
     link = e.children.css('a')[0]['href']
-    links << Manset.new(img,nil,link)
+    biglinks << Manset.new(img,nil,link) unless siktiret(link)
   end
 
-  links
+  [links, biglinks]
 end
 
 if production?
@@ -49,7 +54,7 @@ set :views, File.dirname(__FILE__)
 
 get '/' do
   headers 'Cache-Control' => "max-age=300"
-  @mansetler = mansetler
+  @sur, @mansetler = mansetler
   erb :index
 end
 

@@ -1,0 +1,16 @@
+<ul>
+  <% for manset in mansetler %>
+    <li>
+      <a href="<%=manset.link%>">
+        <% if manset.text %>
+          <h3><%= manset.text %></h3>
+          <img src="<%= manset.img %>" />
+        <% else %>
+          <img class="onlyphoto" src="<%= manset.img %>">
+        <% end %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+<br style="clear:both;" />
+
