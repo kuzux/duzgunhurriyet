@@ -1,7 +1,7 @@
 <ul>
   <% for manset in mansetler %>
     <li>
-      <a href="/haber/<%=manset.link%>">
+      <a href="/haber/<%=URI.escape(manset.link%>)">
         <% if manset.text %>
           <h3><%= manset.text %></h3>
           <img src="<%= manset.img %>" />
