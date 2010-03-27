@@ -4,6 +4,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'erb'
 require 'logger'
+require 'uri'
 
 class Manset < Struct.new(:img, :text, :link); end
 class Kose < Struct.new(:yazar, :baslik, :text); end
@@ -96,7 +97,7 @@ end
 
 get %r{/haber/(.+)} do
   headers 'Cache-Control' => "max-age=1800"
-  @url = params[:captures][0]
+  @url = URI.unescape(params[:captures][0])
   @title, @html = scrape_haber @url
   erb :haber
 end
