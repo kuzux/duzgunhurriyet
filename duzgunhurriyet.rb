@@ -5,6 +5,7 @@ require 'nokogiri'
 require 'erb'
 require 'logger'
 require 'cgi'
+require 'iconv'
 
 class Manset < Struct.new(:img, :text, :link); end
 class Kose < Struct.new(:yazar, :baslik, :text); end
@@ -107,6 +108,7 @@ get %r{/haber/(.+)} do
 
   @url = CGI.unescape(params[:captures][0])
   @title, @html = scrape_haber @url
+  @html = Iconv.conv("UTF-8", "Windows-1254", @html)
   erb :haber
 end
 
