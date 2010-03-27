@@ -4,7 +4,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'erb'
 require 'logger'
-require 'uri'
+require 'cgi'
 
 class Manset < Struct.new(:img, :text, :link); end
 class Kose < Struct.new(:yazar, :baslik, :text); end
@@ -88,14 +88,24 @@ def logger; LOGGER; end
 set :views, File.dirname(__FILE__)
 
 get '/' do
-  headers 'Cache-Control' => "max-age=300"
+  if production?
+    headers 'Cache-Control' => "max-age=300"
+  else
+    headers 'Cache-Control' => "no-cache"
+  end
+
   @sur, @mansetler = mansetler
   erb :index
 end
 
 get %r{/haber/(.+)} do
-  headers 'Cache-Control' => "max-age=1800"
-  @url = URI.unescape(params[:captures][0])
+  if production?
+    headers 'Cache-Control' => "max-age=1800"
+  else
+    headers 'Cache-Control' => "no-cache"
+  end
+
+  @url = CGI.unescape(params[:captures][0])
   @title, @html = scrape_haber @url
   erb :haber
 end
