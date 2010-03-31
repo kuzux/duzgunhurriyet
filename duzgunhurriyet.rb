@@ -86,25 +86,25 @@ end
 
 def logger; LOGGER; end
 
-set :views, File.dirname(__FILE__)
-
-get '/' do
+def max_age(age)
   if production?
-    headers 'Cache-Control' => "max-age=300"
+    headers 'Cache-Control' => "max-age=#{age}"
   else
     headers 'Cache-Control' => "no-cache"
   end
+end
+
+set :views, File.dirname(__FILE__)
+
+get '/' do
+  max_age 300
 
   @sur, @mansetler = mansetler
   erb :index
 end
 
 get %r{/haber/(.+)} do
-  if production?
-    headers 'Cache-Control' => "max-age=1800"
-  else
-    headers 'Cache-Control' => "no-cache"
-  end
+  max_age 1800
 
   @url = CGI.unescape(params[:captures][0])
   @title, @html = scrape_haber @url
