@@ -4,7 +4,7 @@ require 'nokogiri'
 require 'logger'
 
 def siktiret url
-  url =~ /(magazin|galeri|spor|webtv)/
+  url =~ /(magazin|galeri|spor|webtv|fotoanaliz)/
 end
 
 module Scrape
@@ -70,5 +70,9 @@ module Scrape
     end
 
     [title, res.map{|x| x.to_html}.join("")]
+  end
+
+  def self.kose
+
   end
 end
