@@ -6,7 +6,15 @@ require 'cgi'
 require 'iconv'
 require 'scrape'
 
-class Manset < Struct.new(:img, :text, :link); end
+class Manset < Struct.new(:img, :text, :link)
+  def full_link
+    if self.link =~ /yazarlar/
+      "/kose/#{CGI.escape self.link}"
+    else
+      "/haber/#{CGI.escape self.link}"
+    end
+  end
+end
 
 if production?
   LOGGER = Logger.new("log/production.log")
@@ -37,6 +45,15 @@ get %r{/haber/(.+)} do
 
   @url = CGI.unescape(params[:captures][0])
   @title, @html = Scrape.haber @url
+  @html = Iconv.conv("UTF-8", "Windows-1254", @html)
+  erb :haber
+end
+
+get %r{/kose/(.+)} do
+  max_age 1800000 # Yardir yardir
+
+  @url = CGI.unescape(params[:captures][0])
+  @title, @html = Scrape.kose @url
   @html = Iconv.conv("UTF-8", "Windows-1254", @html)
   erb :haber
 end
